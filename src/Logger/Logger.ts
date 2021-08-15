@@ -1,5 +1,7 @@
 export type Callback = () => any
 
+const DISABLE_COLOR = '90'
+
 export default class Logger {
   private readonly deep: string[] = []
 
@@ -69,9 +71,9 @@ export default class Logger {
       }
 
       if (error) {
-        this.log(`\u001b[31m${prefix}└ ✖ ${id}\u001b[39m \u001b[31m${error}\u001b[39m`)
+        this.log(`\u001b[31m${prefix}└ ✖ \u001b[${DISABLE_COLOR}m${id} \u001b[31m${error}\u001b[39m`)
       } else {
-        this.log(`\u001b[32m${prefix}└ ✔ ${id}\u001b[39m`)
+        this.log(`\u001b[32m${prefix}└ ✔ \u001b[${DISABLE_COLOR}m${id}\u001b[39m`)
       }
     }
   }
@@ -97,9 +99,9 @@ export default class Logger {
     }
 
     if (error) {
-      this.log(`\u001b[31m${prefix}├ ✖ ${prevId} ⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
+      this.log(`\u001b[31m${prefix}├ ✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
     } else {
-      this.log(`\u001b[32m${prefix}├ ✔ ${prevId} ⇝\u001b[39m ${nextId}`)
+      this.log(`\u001b[32m${prefix}├ ✔ \u001b[${DISABLE_COLOR}m${prevId} \u001b[32m⇝\u001b[39m ${nextId}`)
     }
   }
 }

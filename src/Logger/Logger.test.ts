@@ -22,7 +22,7 @@ describe('Logger', () => {
 
     expect(log).toEqual([
       '\u001b[32m┌ \u001b[39mtest',
-      '\u001b[32m└ ✔ test\u001b[39m',
+      '\u001b[32m└ ✔ \u001b[90mtest\u001b[39m',
     ])
   })
   test('error', () => {
@@ -37,7 +37,7 @@ describe('Logger', () => {
 
     expect(log).toEqual([
       '\u001b[32m┌ \u001b[39mtest',
-      '\u001b[31m└ ✖ test\u001b[39m \u001b[31mtext\u001b[39m',
+      '\u001b[31m└ ✖ \u001b[90mtest \u001b[31mtext\u001b[39m',
     ])
   })
 })

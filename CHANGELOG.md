@@ -2,6 +2,10 @@
 
 ## v1.0
 
+### v1.0.2 [![15.08.2021](https://img.shields.io/date/1629044426)](https://github.com/d8corp/watch-state/tree/v1.0.2)
+
+- changed colors
+
 ### v1.0.1 [![15.08.2021](https://img.shields.io/date/1629040696)](https://github.com/d8corp/watch-state/tree/v1.0.1)
 
 - added `next` method
