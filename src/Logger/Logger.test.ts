@@ -1,7 +1,23 @@
-import Logger from '..'
+import Logger from '.'
+
+const log = []
+
+class LoggerTest extends Logger {
+  log () {
+    log.push([...arguments])
+  }
+}
+
+const logger = new LoggerTest()
 
 describe('Logger', () => {
   it('works', () => {
-    expect(1).toBe(1)
+    logger.start('test')
+
+    expect(log.length).toBe(1)
+
+    logger.end('test')
+
+    expect(log.length).toBe(2)
   })
 })
