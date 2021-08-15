@@ -1,17 +1,17 @@
 import Logger from '.'
 
-const log = []
+let log = []
 
 class LoggerTest extends Logger {
-  log () {
-    log.push([...arguments])
+  log (text) {
+    log.push(text)
   }
 }
 
 const logger = new LoggerTest()
 
 describe('Logger', () => {
-  it('works', () => {
+  test('success', () => {
     logger.start('test')
 
     expect(log.length).toBe(1)
@@ -19,5 +19,25 @@ describe('Logger', () => {
     logger.end('test')
 
     expect(log.length).toBe(2)
+
+    expect(log).toEqual([
+      '\u001b[32m┌ \u001b[39m test',
+      '\u001b[32m└ ✔ \u001b[39m\u001b[90mtest\u001b[39m',
+    ])
+  })
+  test('error', () => {
+    log = []
+    logger.start('test')
+
+    expect(log.length).toBe(1)
+
+    logger.end('test', 'text')
+
+    expect(log.length).toBe(2)
+
+    expect(log).toEqual([
+      '\u001b[32m┌ \u001b[39m test',
+      '\u001b[31m└ ✖ \u001b[39m\u001b[90mtest\u001b[39m \u001b[31mtext\u001b[39m',
+    ])
   })
 })

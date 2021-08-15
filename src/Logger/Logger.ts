@@ -1,7 +1,5 @@
-import chalk from 'chalk'
-
 export default class Logger {
-  private deep: string[] = []
+  private readonly deep: string[] = []
 
   log (...ars: any[]): any
   log () {
@@ -9,31 +7,32 @@ export default class Logger {
   }
 
   start (id: string, callback?: () => any) {
+    const deep = this.deep
     let prefix = ''
     let i = 0
 
-    while (this.deep[i]) {
+    while (deep[i]) {
       prefix += '|'
       i++
     }
 
-    this.deep[i] = id
+    deep[i] = id
 
-    this.log(chalk.green(prefix + '┌ '), id)
+    this.log(`\u001b[32m${prefix}┌ \u001b[39m ${id}`)
 
     if (callback) {
       let result
       try {
         result = callback()
       } catch (e) {
-        this.end(id, e)
+        this.end(id, e.message)
       }
       if (result instanceof Promise) {
         return result.then(v => {
           this.end(id)
           return v
         }, e => {
-          this.end(id, e)
+          this.end(id, e.message)
           return Promise.reject(e)
         })
       } else {
@@ -44,20 +43,30 @@ export default class Logger {
     }
   }
 
-  end (id: string, error?: Error) {
+  end (id: string, error?: string) {
+    const deep = this.deep
     let prefix = ''
-    let i = 0
 
-    for (const value of this.deep) {
-      if (value === id) {
-        this.deep[i] = undefined
+    let index = deep.length - 1
+
+    while (index > -1) {
+      if (deep[index] === id) {
+        deep[index] = ''
         break
       }
-
-      prefix += value ? '|' : ' '
-      i++
+      index--
     }
 
-    this.log(`${error ? chalk.red(prefix + '└ error ') : chalk.green(prefix + '└ success ')}`, id)
+    if (index > -1) {
+      for (let i = 0; i < index; i++) {
+        prefix += deep[i] ? '|' : ' '
+      }
+    }
+
+    if (error) {
+      this.log(`\u001b[31m${prefix}└ ✖ \u001b[39m\u001b[90m${id}\u001b[39m \u001b[31m${error}\u001b[39m`)
+    } else {
+      this.log(`\u001b[32m${prefix}└ ✔ \u001b[39m\u001b[90m${id}\u001b[39m`)
+    }
   }
 }
