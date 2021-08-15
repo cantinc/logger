@@ -1,0 +1,27 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": "standard-with-typescript",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "no-console": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "import/no-absolute-path": "off",
+    "no-use-before-define": "off",
+    "no-redeclare": "off",
+    "no-unused-vars": "off",
+    "new-cap": "off",
+    "symbol-description": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/promise-function-async": "off"
+  }
+}
