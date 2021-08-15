@@ -1,0 +1,28 @@
+{
+  "name": "@cantinc/logger",
+  "version": "1.0.1",
+  "description": "CANT inc. log system",
+  "homepage": "https://github.com/cantinc/logger",
+  "author": "Mikhail Lysikov <d8corp@mail.ru>",
+  "license": "MIT",
+  "main": "index.js",
+  "module": "index.es6.js",
+  "jsnext:main": "index.es6.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cantinc/logger.git"
+  },
+  "keywords": [
+    "log",
+    "logger",
+    "logging",
+    "cantinc",
+    "node",
+    "back-end",
+    "front-end"
+  ],
+  "bugs": {
+    "url": "https://github.com/cantinc/logger/issues"
+  }
+}

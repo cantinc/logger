@@ -1,3 +1,5 @@
+export type Callback = () => any
+
 export default class Logger {
   private readonly deep: string[] = []
 
@@ -6,20 +8,7 @@ export default class Logger {
     return console.log.apply(console, arguments)
   }
 
-  start (id: string, callback?: () => any) {
-    const deep = this.deep
-    let prefix = ''
-    let i = 0
-
-    while (deep[i]) {
-      prefix += '|'
-      i++
-    }
-
-    deep[i] = id
-
-    this.log(`\u001b[32m${prefix}┌ \u001b[39m ${id}`)
-
+  private callCallback (id: string, callback?: Callback) {
     if (callback) {
       let result
       try {
@@ -43,6 +32,23 @@ export default class Logger {
     }
   }
 
+  start (id: string, callback?: Callback) {
+    const deep = this.deep
+    let prefix = ''
+    let i = 0
+
+    while (deep[i]) {
+      prefix += '|'
+      i++
+    }
+
+    deep[i] = id
+
+    this.log(`\u001b[32m${prefix}┌ \u001b[39m${id}`)
+
+    return this.callCallback(id, callback)
+  }
+
   end (id: string, error?: string) {
     const deep = this.deep
     let prefix = ''
@@ -61,12 +67,39 @@ export default class Logger {
       for (let i = 0; i < index; i++) {
         prefix += deep[i] ? '|' : ' '
       }
+
+      if (error) {
+        this.log(`\u001b[31m${prefix}└ ✖ ${id}\u001b[39m \u001b[31m${error}\u001b[39m`)
+      } else {
+        this.log(`\u001b[32m${prefix}└ ✔ ${id}\u001b[39m`)
+      }
+    }
+  }
+
+  next (prevId: string, nextId: string, error?: string) {
+    const deep = this.deep
+    let prefix = ''
+
+    let index = deep.length - 1
+
+    while (index > -1) {
+      if (deep[index] === prevId) {
+        deep[index] = nextId
+        break
+      }
+      index--
+    }
+
+    if (index > -1) {
+      for (let i = 0; i < index; i++) {
+        prefix += deep[i] ? '|' : ' '
+      }
     }
 
     if (error) {
-      this.log(`\u001b[31m${prefix}└ ✖ \u001b[39m\u001b[90m${id}\u001b[39m \u001b[31m${error}\u001b[39m`)
+      this.log(`\u001b[31m${prefix}├ ✖ ${prevId} ⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
     } else {
-      this.log(`\u001b[32m${prefix}└ ✔ \u001b[39m\u001b[90m${id}\u001b[39m`)
+      this.log(`\u001b[32m${prefix}├ ✔ ${prevId} ⇝\u001b[39m ${nextId}`)
     }
   }
 }
