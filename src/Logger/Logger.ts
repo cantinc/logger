@@ -3,6 +3,7 @@ const readline = typeof require === 'undefined' ? null : require('readline')
 const defaultMoveUp = readline
   ? function defaultMoveUp () {
     readline.moveCursor(process.stdout, 0, -1)
+    readline.clearLine(process.stdout)
   }
   : () => {}
 
