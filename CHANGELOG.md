@@ -2,6 +2,10 @@
 
 ## v1.0
 
+### v1.0.6 [![15.08.2021](https://img.shields.io/date/1629058441)](https://github.com/d8corp/watch-state/tree/v1.0.6)
+
+- style improvements
+
 ### v1.0.5 [![15.08.2021](https://img.shields.io/date/1629052829)](https://github.com/d8corp/watch-state/tree/v1.0.5)
 
 - fixed a bug of `log` function when cursor changes

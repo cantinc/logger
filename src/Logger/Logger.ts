@@ -127,6 +127,8 @@ export default class Logger {
 
       if (this.lastId === id && this.lastCount === count) {
         this.moveUp()
+      } else {
+        prefix += '└ '
       }
 
       if (error) {
@@ -158,9 +160,9 @@ export default class Logger {
     }
 
     if (error) {
-      this._log(`\u001b[31m${prefix}✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
+      this._log(`\u001b[31m${prefix}├ ✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
     } else {
-      this._log(`\u001b[32m${prefix}✔ \u001b[${DISABLE_COLOR}m${prevId} \u001b[32m⇝\u001b[39m ${nextId}`)
+      this._log(`\u001b[32m${prefix}├ ✔ \u001b[${DISABLE_COLOR}m${prevId} \u001b[32m⇝\u001b[39m ${nextId}`)
     }
   }
 }
