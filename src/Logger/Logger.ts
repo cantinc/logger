@@ -125,16 +125,22 @@ export default class Logger {
         prefix += deep[i] ? '|' : ' '
       }
 
+      let prefSymbol = ''
+
       if (this.lastId === id && this.lastCount === count) {
         this.moveUp()
       } else {
-        prefix += '└ '
+        prefSymbol = '└ '
+      }
+
+      if (!error || prefix) {
+        prefix = `\u001b[32m${prefix}`
       }
 
       if (error) {
-        this._log(`\u001b[31m${prefix}✖ \u001b[${DISABLE_COLOR}m${id} \u001b[31m${error}\u001b[39m`)
+        this._log(`${prefix}\u001b[31m${prefSymbol}✖ \u001b[${DISABLE_COLOR}m${id} \u001b[31m${error}\u001b[39m`)
       } else {
-        this._log(`\u001b[32m${prefix}✔ \u001b[${DISABLE_COLOR}m${id}\u001b[39m`)
+        this._log(`${prefix}${prefSymbol}✔ \u001b[${DISABLE_COLOR}m${id}\u001b[39m`)
       }
     }
   }
@@ -160,7 +166,7 @@ export default class Logger {
     }
 
     if (error) {
-      this._log(`\u001b[31m${prefix}├ ✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
+      this._log(`\u001b[32m${prefix}\u001b[31m├ ✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
     } else {
       this._log(`\u001b[32m${prefix}├ ✔ \u001b[${DISABLE_COLOR}m${prevId} \u001b[32m⇝\u001b[39m ${nextId}`)
     }

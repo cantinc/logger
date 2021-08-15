@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1
+
+### v1.1.0 [![16.08.2021](https://img.shields.io/date/1629062169)](https://github.com/d8corp/watch-state/tree/v1.1.0)
+
+- fixed a color bug
+- updated readme
+
 ## v1.0
 
 ### v1.0.6 [![15.08.2021](https://img.shields.io/date/1629058441)](https://github.com/d8corp/watch-state/tree/v1.0.6)

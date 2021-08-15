@@ -1,5 +1,5 @@
 <a href="https://github.com/cantinc">
-<img align="left" width="90" height="90" alt="CANT.store" src="https://raw.githubusercontent.com/cantinc/logger/main/img/cant.store.png">
+<img align="left" width="90" height="90" alt="CANT.store" src="https://raw.githubusercontent.com/cantinc/logger/v1.0.6/img/cant.store.png">
 </a>
 
 # &nbsp; logger
@@ -36,8 +36,6 @@ cdn
 
 ## Usage
 
-
-
 ### Simple example
 
 ```typescript
@@ -50,6 +48,49 @@ logger.start(eventId)
 // do somethink
 
 logger.end(eventId)
+```
+
+### Complex example
+
+![CANT inc. Logger Example](https://raw.githubusercontent.com/cantinc/logger/main/img/example.png)
+
+You will get the same picture if you run the next code
+
+```typescript
+logger.start('Main test')
+
+logger.log('Some message')
+
+logger.start('Inside test with message')
+logger.log('Inside message')
+logger.end('Inside test with message')
+
+logger.start('Inside test without message')
+logger.end('Inside test without message')
+
+logger.start('Test with error')
+logger.log('Inside message')
+logger.end('Test with error', 'Error text')
+
+logger.start('Message Chaining')
+logger.next('Message Chaining', 'Step1')
+logger.next('Step1', 'Step2')
+logger.next('Step2', 'Step3', 'Step2 Error Message')
+logger.end('Step3')
+
+logger.start('Callback Running', () => {
+  logger.log('Callback Message')
+})
+
+logger.start('Async Callback', async () => {
+  logger.log('Async Message')
+})
+
+logger.start('Async Callback with error', async () => {
+  throw Error('Test Error')
+})
+
+logger.end('Main test')
 ```
 
 ## Issues
