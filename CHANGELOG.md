@@ -2,6 +2,10 @@
 
 ## v1.0
 
+### v1.0.5 [![15.08.2021](https://img.shields.io/date/1629052829)](https://github.com/d8corp/watch-state/tree/v1.0.5)
+
+- fixed a bug of `log` function when cursor changes
+
 ### v1.0.4 [![15.08.2021](https://img.shields.io/date/1629052211)](https://github.com/d8corp/watch-state/tree/v1.0.4)
 
 - fixed a bug of collapsed logs
