@@ -1,6 +1,6 @@
 {
   "name": "@cantinc/logger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CANT inc. log system",
   "homepage": "https://github.com/cantinc/logger",
   "author": "Mikhail Lysikov <d8corp@mail.ru>",

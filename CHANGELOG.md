@@ -2,6 +2,11 @@
 
 ## v1.0
 
+### v1.0.3 [![15.08.2021](https://img.shields.io/date/1629051034)](https://github.com/d8corp/watch-state/tree/v1.0.3)
+
+- added `log` method
+- style improvements
+
 ### v1.0.2 [![15.08.2021](https://img.shields.io/date/1629044426)](https://github.com/d8corp/watch-state/tree/v1.0.2)
 
 - changed colors

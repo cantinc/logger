@@ -1,13 +1,59 @@
+const readline = typeof require === 'undefined' ? null : require('readline')
+
+const defaultMoveUp = readline
+  ? function defaultMoveUp () {
+    readline.moveCursor(process.stdout, 0, -1)
+  }
+  : () => {}
+
 export type Callback = () => any
 
 const DISABLE_COLOR = '90'
 
+let count = 0
+
+const originLog = console.log
+console.log = function log () {
+  count++
+  originLog.apply(this, arguments)
+}
+
+const originWarn = console.warn
+console.warn = function warn () {
+  count++
+  originWarn.apply(this, arguments)
+}
+
+const originError = console.error
+console.error = function error () {
+  count++
+  originError.apply(this, arguments)
+}
+
 export default class Logger {
   private readonly deep: string[] = []
+  private lastId: string
+  private lastCount: number
 
-  log (...ars: any[]): any
-  log () {
-    return console.log.apply(console, arguments)
+  protected _log (text: string) {
+    console.log(text)
+  }
+
+  log (text: string) {
+    const deep = this.deep
+    let prefix = ''
+    let i = 0
+
+    while (deep[i]) {
+      prefix += '|'
+      i++
+    }
+
+    this._log(`\u001b[32m${prefix}\u001b[39m ${text}`)
+  }
+
+  protected moveUp () {
+    return defaultMoveUp()
   }
 
   private callCallback (id: string, callback?: Callback) {
@@ -46,8 +92,10 @@ export default class Logger {
 
     deep[i] = id
 
-    this.log(`\u001b[32m${prefix}┌ \u001b[39m${id}`)
+    this._log(`\u001b[32m${prefix}┌ \u001b[39m${id}`)
 
+    this.lastId = id
+    this.lastCount = count
     return this.callCallback(id, callback)
   }
 
@@ -70,10 +118,14 @@ export default class Logger {
         prefix += deep[i] ? '|' : ' '
       }
 
+      if (this.lastId === id && this.lastCount === count) {
+        this.moveUp()
+      }
+
       if (error) {
-        this.log(`\u001b[31m${prefix}└ ✖ \u001b[${DISABLE_COLOR}m${id} \u001b[31m${error}\u001b[39m`)
+        this._log(`\u001b[31m${prefix}✖ \u001b[${DISABLE_COLOR}m${id} \u001b[31m${error}\u001b[39m`)
       } else {
-        this.log(`\u001b[32m${prefix}└ ✔ \u001b[${DISABLE_COLOR}m${id}\u001b[39m`)
+        this._log(`\u001b[32m${prefix}✔ \u001b[${DISABLE_COLOR}m${id}\u001b[39m`)
       }
     }
   }
@@ -99,9 +151,9 @@ export default class Logger {
     }
 
     if (error) {
-      this.log(`\u001b[31m${prefix}├ ✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
+      this._log(`\u001b[31m${prefix}✖ \u001b[${DISABLE_COLOR}m${prevId} \u001b[31m⇝\u001b[39m ${nextId} \u001b[31m${error}\u001b[39m`)
     } else {
-      this.log(`\u001b[32m${prefix}├ ✔ \u001b[${DISABLE_COLOR}m${prevId} \u001b[32m⇝\u001b[39m ${nextId}`)
+      this._log(`\u001b[32m${prefix}✔ \u001b[${DISABLE_COLOR}m${prevId} \u001b[32m⇝\u001b[39m ${nextId}`)
     }
   }
 }
